@@ -4,105 +4,802 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Harsh Vishwakarma - Portfolio</title>
-  <link rel="stylesheet" href="style.css"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+      --dark-bg: #0a0a0a;
+      --card-bg: rgba(255, 255, 255, 0.12);
+      --text-primary: #ffffff;
+      --text-secondary: #e0e0e0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 50%, #2d1b69 100%);
+      min-height: 100vh;
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
+
+    /* Animated background particles */
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    /* Glassmorphism container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+    }
+
+    /* Header with hero section */
+    .hero {
+      text-align: center;
+      padding: 60px 0;
+      margin-bottom: 60px;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+      background: linear-gradient(45deg, #fff, #f0f0f0, #fff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
+      to { text-shadow: 0 0 30px rgba(255, 255, 255, 0.8); }
+    }
+
+    .hero .subtitle {
+      font-size: 1.3rem;
+      color: var(--text-secondary);
+      margin-bottom: 30px;
+      font-weight: 300;
+    }
+
+    .hero .location {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    /* Navigation */
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      padding: 10px 20px;
+      border-radius: 50px;
+      text-decoration: none;
+      color: var(--text-primary);
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      position: relative;
+      overflow: hidden;
+      font-size: 0.9rem;
+    }
+
+    .nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .nav a:hover::before {
+      left: 100%;
+    }
+
+    .nav a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .nav a i {
+      margin-right: 6px;
+      font-size: 0.8rem;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 20px;
+      padding: 40px;
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--primary-gradient);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      background: rgba(255, 255, 255, 0.18);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .card h2 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 30px;
+      color: var(--text-primary);
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .card h2 i {
+      font-size: 1.8rem;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* About section */
+    .about-content {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      text-align: center;
+    }
+
+    /* Skills grid */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .skill-category {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 25px;
+      border-radius: 15px;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-category::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .skill-category:hover::before {
+      left: 100%;
+    }
+
+    .skill-category:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .skill-category h3 {
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .skill-category p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      font-weight: 500;
+    }
+
+    /* Projects grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .project-card {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 30px;
+      border-radius: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--secondary-gradient);
+    }
+
+    .project-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .project-card:hover::after {
+      left: 100%;
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .project-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .project-card p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 15px;
+      font-weight: 400;
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-gradient);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .project-link:hover::before {
+      left: 100%;
+    }
+
+    .project-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+    }
+
+    /* Education timeline */
+    .education-timeline {
+      position: relative;
+      padding-left: 30px;
+      margin-top: 20px;
+    }
+
+    .education-timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--success-gradient);
+    }
+
+    .education-item {
+      position: relative;
+      margin-bottom: 30px;
+      padding-left: 20px;
+    }
+
+    .education-item::before {
+      content: '';
+      position: absolute;
+      left: -9px;
+      top: 5px;
+      width: 16px;
+      height: 16px;
+      background: var(--success-gradient);
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+    }
+
+    .education-item h3 {
+      font-size: 1.3rem;
+      color: var(--text-primary);
+      margin-bottom: 5px;
+    }
+
+    .education-item .degree {
+      color: var(--text-secondary);
+      font-weight: 500;
+      margin-bottom: 3px;
+    }
+
+    .education-item .year {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    /* Contact section */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .contact-item {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .contact-item:hover::before {
+      left: 100%;
+    }
+
+    .contact-item:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .contact-item i {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      background: var(--warning-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .contact-item a {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+    }
+
+    .contact-item:hover a {
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 40px 0;
+      margin-top: 60px;
+      color: var(--text-secondary);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .nav {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .card {
+        padding: 20px;
+      }
+    }
+
+    /* Scroll animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 <body>
+  <div class="bg-animation"></div>
+  
   <div class="container">
-    <header>
+    <header class="hero">
       <h1>Harsh Vishwakarma</h1>
-      <p><strong>Address:</strong> 93, Sector 12, RK Puram, New Delhi</p>
-      <nav>
-        <a href="#projects">Projects</a>
-        <a href="#education">Education</a>
-        <a href="#skills">Skills</a>
-        <a href="#contact">Contact</a>
-        <a href="resume.pdf" target="_blank">Download Resume</a>
+      <p class="subtitle">Computer Science Engineer & AI Enthusiast</p>
+      <p class="location">
+        <i class="fas fa-map-marker-alt"></i>
+        93, Sector 12, RK Puram, New Delhi
+      </p>
+      
+      <nav class="nav">
+        <a href="#about"><i class="fas fa-user"></i> About</a>
+        <a href="#education"><i class="fas fa-graduation-cap"></i> Education</a>
+        <a href="#skills"><i class="fas fa-code"></i> Skills</a>
+        <a href="#projects"><i class="fas fa-rocket"></i> Projects</a>
+        <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
       </nav>
     </header>
 
-    <section id="about">
-      <h2>About Me</h2>
-      <p>I’m a B.Tech CSE student at IIIT-Delhi with a passion for NLP, Machine Learning, and full-stack development. I bring a fresh perspective, dedication to learning, and practical coding experience through several academic projects.</p>
+    <section id="about" class="card fade-in">
+      <h2><i class="fas fa-user-circle"></i>About Me</h2>
+      <div class="about-content">
+        <p>I'm a passionate B.Tech CSE student at IIIT-Delhi with a deep fascination for Natural Language Processing, Machine Learning, and software development. I thrive on transforming complex problems into elegant solutions and am constantly exploring the cutting edge of AI and software engineering.</p>
+      </div>
     </section>
 
-    <section id="education">
-      <h2>Education</h2>
-      <ul>
-        <li>
-          <strong>Indraprastha Institute of Information Technology, Delhi</strong><br>
-          B.Tech in Computer Science and Engineering<br>
-          2022 – Present
-        </li>
-        <li>
-          <strong>Kendriya Vidyalaya No. 2, Delhi Cantt</strong><br>
-          CBSE – Class 12 (PCM + Computer Science)<br>
-          2021 – 2022
-        </li>
-        <li>
-          <strong>Kendriya Vidyalaya No. 2, Delhi Cantt</strong><br>
-          CBSE – Class 10<br>
-          2019 – 2020
-        </li>
-      </ul>
+    <section id="education" class="card fade-in">
+      <h2><i class="fas fa-graduation-cap"></i>Education</h2>
+      <div class="education-timeline">
+        <div class="education-item">
+          <h3>Indraprastha Institute of Information Technology, Delhi</h3>
+          <p class="degree">B.Tech in Computer Science and Engineering</p>
+          <p class="year">2022 – Present</p>
+        </div>
+        <div class="education-item">
+          <h3>Kendriya Vidyalaya No. 2, Delhi Cantt</h3>
+          <p class="degree">CBSE – Class 12 (PCM + Computer Science)</p>
+          <p class="year">2021 – 2022</p>
+        </div>
+        <div class="education-item">
+          <h3>Kendriya Vidyalaya No. 2, Delhi Cantt</h3>
+          <p class="degree">CBSE – Class 10</p>
+          <p class="year">2019 – 2020</p>
+        </div>
+      </div>
     </section>
 
-    <section id="skills">
-      <h2>Skills</h2>
-      <ul>
-        <li>Python, Java, C, HTML</li>
-        <li>Machine Learning, NLP, OOP, DBMS, DSA</li>
-        <li>Tools: VS Code, IntelliJ, MySQL, Linux, Canva, Miro</li>
-      </ul>
+    <section id="skills" class="card fade-in">
+      <h2><i class="fas fa-code"></i>Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-category">
+          <h3><i class="fas fa-laptop-code"></i> Programming</h3>
+          <p>Python, Java, C, HTML</p>
+        </div>
+        <div class="skill-category">
+          <h3><i class="fas fa-brain"></i> AI & ML</h3>
+          <p>Machine Learning, NLP, Deep Learning</p>
+        </div>
+        <div class="skill-category">
+          <h3><i class="fas fa-database"></i> Core CS</h3>
+          <p>OOP, DBMS, DSA, Algorithms</p>
+        </div>
+        <div class="skill-category">
+          <h3><i class="fas fa-tools"></i> Tools</h3>
+          <p>VS Code, IntelliJ, MySQL, Linux, Canva, Miro</p>
+        </div>
+      </div>
     </section>
 
-    <section id="projects">
-      <h2>Projects</h2>
-      <ul>
-        <li>
-          <strong>Perspective-Aware Summarization of Healthcare Discussions</strong><br>
-          Developed an NLP pipeline to summarize unstructured healthcare discussions using <em>FLAN-T5, BART, and PLASMA</em> transformer models. Integrated weak supervision via <em>Snorkel</em> to label data efficiently and applied ensemble methods to boost semantic coherence and perspective diversity in generated summaries.
-          <a href="https://drive.google.com/file/d/1ebBvkEjKrzX4R1QnLnurbuVhHZb_ox2c/view?usp=drive_link" target="_blank">Read the Research Paper</a>
-        </li>
-
-        <li>
-          <strong>Flood Prediction Using Machine Learning</strong><br>
-          Designed a machine learning-based flood forecasting tool using historical rainfall and geographic data. Employed <em>feature engineering</em>, <em>data normalization</em>, and regression models to enhance early warning systems. Focused on improving model reliability and interpretability.
-        </li>
-
-        <li>
-          <strong>Online Grocery Store Application</strong><br>
-          Created a fully functional Java-based command-line grocery app, backed by a <em>MySQL database</em>. Implemented complex transaction logic with <em>SQL triggers, rollback mechanisms, and foreign key constraints</em> to simulate real-world e-commerce behavior.
-        </li>
-
-        <li>
-          <strong>Stick Hero Game (JavaFX)</strong><br>
-          Built a 2D arcade-style game in Java using <em>JavaFX and FXML</em>. Demonstrated strong object-oriented programming with modular architecture, incorporating inheritance, abstraction, and event-driven animations to create smooth gameplay experiences.
-        </li>
-
-        <li>
-          <strong>Assembler and Simulator for RISC ISA</strong><br>
-          Programmed an assembler and simulator in <em>Python</em> for a simplified RISC-like instruction set. Included comprehensive support for custom syntax, label parsing, and memory/register management, with thorough <em>error checking and debugging utilities</em>.
-        </li>
-
-        <li>
-          <strong>Custom Linux Shell in C</strong><br>
-          Developed a Unix-style shell using <em>low-level C and Linux system calls</em>. Supported internal commands (cd, pwd) and external command execution using `fork`, `exec`, and `wait`. Handled input parsing, command history, and user prompts.
-        </li>
-      </ul>
+    <section id="projects" class="card fade-in">
+      <h2><i class="fas fa-rocket"></i>Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <h3>🏥 Healthcare Discussion Summarizer</h3>
+          <p>A perspective-aware summarization system for healthcare Q&A forums using advanced transformer models like Flan-T5, BART, and Pegasus. It generates concise, multi-perspective summaries to improve clarity and reliability of online health information.</p>
+          <a href="https://drive.google.com/file/d/1ebBvkEjKrzX4R1QnLnurbuVhHZb_ox2c/view?usp=drive_link" target="_blank" class="project-link">
+            <i class="fas fa-external-link-alt"></i> Research Paper
+          </a>
+        </div>
+        
+        <div class="project-card">
+          <h3>🌊 Flood Prediction System</h3>
+          <p>Created a machine learning-based flood prediction system that forecasts flood probability using environmental and infrastructure-related features. Trained regression models using rainfall + geographic data. Added normalization & feature engineering.</p>
+          <a href="https://drive.google.com/file/d/1Rw2EaneXeVW9R3IOw5alySRvvXidPvJi/view?usp=sharing" target="_blank" class="project-link">
+            <i class="fas fa-external-link-alt"></i> Research Paper
+          </a>
+        </div>
+        
+        <div class="project-card">
+          <h3>🛒 Online Grocery Store</h3>
+          <p>A fully functional command-line based online grocery store. This system allows customers to browse, order, and pay for grocery items while enabling admins to manage inventory, track customer activity, and oversee delivery logistics using an SQL-backed relational database.</p>
+          <a href="https://docs.google.com/presentation/d/1703LuXUJ3Hc4cLSZ0xvnJ_McD7BVaa4g/edit?usp=sharing&ouid=108049351732374820521&rtpof=true&sd=true" target="_blank" class="project-link">
+            <i class="fas fa-external-link-alt"></i> Project Overview
+          </a>
+        </div>
+        
+        <div class="project-card">
+          <h3>🎮 Stick Hero Game</h3>
+          <p>2D arcade game built with JavaFX demonstrating OOP principles, modular architecture, and smooth event-driven animations.</p>
+        </div>
+        
+        <div class="project-card">
+          <h3>⚙️ RISC Assembler & Simulator</h3>
+          <p>Python-based assembler and simulator for RISC instruction set with comprehensive syntax support and debugging utilities.</p>
+        </div>
+        
+        <div class="project-card">
+          <h3>📊 Data Analysis of Pupil Dilation</h3>
+          <p>Developed a code that analyzes average pupil diameter and reaction times during cued and uncued trials across multiple spatial eccentricity groups and experimental blocks. The data comes from experimental conditions involving emotional face stimuli (Happy, Angry, Neutral) and spatial cues.</p>
+          <a href="https://drive.google.com/file/d/1ixa0PIob2EKAAW2f17S3_6v83DRTRJIh/view?usp=sharing" target="_blank" class="project-link">
+            <i class="fas fa-external-link-alt"></i> Project Report
+          </a>
+        </div>
+        <div class="project-card">
+          <h3>Zootopia: Zoo Management System (Java CLI)</h3>
+          <p>Zootopia is a Java-based command-line application that simulates the core operations of a zoo management system. The application allows both Admins and Visitors to interact with the system via a simple, menu-driven interface.</p>
+          <a href="https://claude.ai/public/artifacts/7db7959d-2d81-434e-b6d9-66165252fce8" target="_blank" class="project-link">
+            <i class="fas fa-external-link-alt"></i> Project Overview
+          </a>
+        </div>
+      </div>
     </section>
 
-    <section id="contact">
-      <h2>Contact</h2>
-      <p>📧 Email: <a href="mailto:harsh22205@iiitd.ac.in">harsh22205@iiitd.ac.in</a></p>
-      <p>💻 GitHub: <a href="https://github.com/Harshvishwa123" target="_blank">github.com/Harshvishwa123</a></p>
-      <p>💼 LinkedIn: <a href="https://linkedin.com/in/harsh-vishwakarma-514462327" target="_blank">linkedin.com/in/harsh-vishwakarma-514462327</a></p>
-      <p>📸 Instagram: <a href="https://instagram.com/harshvishwakarma516" target="_blank">@harshvishwakarma516</a></p>
+    <section id="contact" class="card fade-in">
+      <h2><i class="fas fa-envelope"></i>Contact</h2>
+      <div class="contact-grid">
+        <div class="contact-item">
+          <i class="fas fa-envelope"></i>
+          <p><a href="mailto:harsh22205@iiitd.ac.in">harsh22205@iiitd.ac.in</a></p>
+        </div>
+        <div class="contact-item">
+          <i class="fab fa-github"></i>
+          <p><a href="https://github.com/Harshvishwa123" target="_blank">GitHub Profile</a></p>
+        </div>
+        <div class="contact-item">
+          <i class="fab fa-linkedin"></i>
+          <p><a href="https://linkedin.com/in/harsh-vishwakarma-514462327" target="_blank">LinkedIn</a></p>
+        </div>
+        <div class="contact-item">
+          <i class="fab fa-instagram"></i>
+          <p><a href="https://instagram.com/harshvishwakarma516" target="_blank">Instagram</a></p>
+        </div>
+      </div>
     </section>
 
-
-    <footer>
-      <p>© 2025 Harsh Vishwakarma</p>
+    <footer class="footer">
+      <p>© 2025 Harsh Vishwakarma • Crafted with passion and code</p>
     </footer>
   </div>
+
+  <script>
+    // Create animated background particles
+    function createParticles() {
+      const bgAnimation = document.querySelector('.bg-animation');
+      const particleCount = 50;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 6 + 's';
+        particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+        bgAnimation.appendChild(particle);
+      }
+    }
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    // Add parallax effect to hero section
+    function addParallaxEffect() {
+      const hero = document.querySelector('.hero');
+      window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * -0.5;
+        hero.style.transform = `translateY(${rate}px)`;
+      });
+    }
+
+    // Add hover effects to project cards
+    function addProjectInteractions() {
+      const projectCards = document.querySelectorAll('.project-card');
+      projectCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+          card.style.transform = 'translateY(-8px) scale(1.02)';
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'translateY(0) scale(1)';
+        });
+      });
+    }
+
+    // Initialize everything when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      createParticles();
+      addParallaxEffect();
+      addProjectInteractions();
+      
+      // Observe all fade-in elements
+      document.querySelectorAll('.fade-in').forEach(el => {
+        observer.observe(el);
+      });
+      
+      // Add typing effect to hero title
+      const heroTitle = document.querySelector('.hero h1');
+      const text = heroTitle.textContent;
+      heroTitle.textContent = '';
+      let i = 0;
+      
+      function typeWriter() {
+        if (i < text.length) {
+          heroTitle.textContent += text.charAt(i);
+          i++;
+          setTimeout(typeWriter, 100);
+        }
+      }
+      
+      setTimeout(typeWriter, 500);
+    });
+
+    // Add dynamic gradient background
+    function updateGradient() {
+      // Remove the color-changing background as requested
+      // Keep the static dark professional gradient
+    }
+    
+    updateGradient();
+  </script>
 </body>
 </html>
